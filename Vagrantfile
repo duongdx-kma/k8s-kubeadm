@@ -1,4 +1,5 @@
-NUM_MASTER_NODE = 2 # add standby master - recommend 3, 5, 7 master_node
+NUM_MASTER_NODE = 1 # add standby master - recommend 3, 5, 7 master_node
+# NUM_MASTER_NODE = 2 # add standby master - recommend 3, 5, 7 master_node
 NUM_WORKER_NODE = 2
 
 IP_NW = "192.168.56."
@@ -9,15 +10,15 @@ Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/bionic64"
   config.vm.box_check_update = false
 
-  config.vm.define "loadbalancer" do |loadbalancer|
-  		loadbalancer.vm.provider "virtualbox" do |vb|
-  			vb.name = "loadbalancer"
-  		end
-  		loadbalancer.vm.hostname = "loadbalancer"
-  		loadbalancer.vm.network :private_network, ip: IP_NW + "99"
-  		loadbalancer.vm.provision "setup-nginx", type: "shell", :path => "ubuntu/nginx.sh"
-  		loadbalancer.vm.provision "setup-dns", type: "shell", :path => "ubuntu/update-dns.sh"
-  end
+#   config.vm.define "loadbalancer" do |loadbalancer|
+#   		loadbalancer.vm.provider "virtualbox" do |vb|
+#   			vb.name = "loadbalancer"
+#   		end
+#   		loadbalancer.vm.hostname = "loadbalancer"
+#   		loadbalancer.vm.network :private_network, ip: IP_NW + "99"
+#   		loadbalancer.vm.provision "setup-nginx", type: "shell", :path => "ubuntu/nginx.sh"
+#   		loadbalancer.vm.provision "setup-dns", type: "shell", :path => "ubuntu/update-dns.sh"
+#   end
 
   # provision master node
   (1..NUM_MASTER_NODE).each do |i|
